@@ -8,9 +8,9 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=c68d9aa6-178a-40cf-b29c-947a20612274
-Description=我的脚本1
-Enable=0
+MacroID=bdbafda1-d468-4e54-a022-a56ac46fd15c
+Description=大漠后台测试2
+Enable=1
 AutoRun=0
 [Repeat]
 Type=0
@@ -23,45 +23,45 @@ SetupOCXFile=
 [Comment]
 
 [Script]
-
-x = 300 
-y = 300
-bgColor = "ffffff"
-// 弹窗
-// MessageBox x-5
-// 开始到结束间隔29数字 x-29为死亡
-
-// 有蓝有血 移动再飞随机 不移动
-
-IfColor x, y, bgColor, 0 Then
-Delay 1000
-MessageBox 1
-Else
+set dm = createobject("dm.dmsoft")
+ver = dm.Ver()
+If len(ver) = 0 Then
+    MessageBox "创建对象失败,检查系统是否禁用了vbs脚本权限"
+    EndScript
 End If
 
 
-// 减少血，加血
+// 截图
+// set dm = createobject("dm.dmsoft")
+dm.SetPath "c:"
+// hwnd = 1120164
+hwnd = dm.GetMousePointWindow()
+messagebox hwnd
+// dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
+dm_ret = dm.BindWindow(hwnd,"dx2","windows","windows",0)
 
-IfColor x-2, y, bgColor, 1 Then
-Delay 1000
-MessageBox 2
-Else
+
+If dm_ret = 0 Then 
+	MessageBox "绑定失败"
+	EndScript
 End If
+dm_ret = dm.Capture(0, 0, 2000, 2000, "screen.bmp")
+dm_ret = dm.UnBindWindow()
+// EndScript
 
+// 键盘
+Delay  1000
+// set dm = createobject("dm.dmsoft")
+//hwnd = dm.GetMousePointWindow()
+hwnd = 1120164
+// dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
+dm_ret = dm.BindWindow(hwnd, "dx", "windows", "windows", 0)
 
-// 半血，招骷髅
-IfColor x-14, y, bgColor, 1 Then
-Delay 1000
-MessageBox 3
-Else
-End If
+dm.KeyPress 68
+dm_ret = dm.IsBind(hwnd)
 
+Delay  100
+dm_ret = dm.UnBindWindow()
 
-// 没血，回城6,地牢5
-
-IfColor x-22, y, bgColor, 1 Then
-Delay 1000
-MessageBox 4
-Else
-End If
-
+// messagebox hwnd
+EndScript

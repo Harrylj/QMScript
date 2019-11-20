@@ -8,8 +8,8 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=6e79f81e-e20d-4937-bf9b-472b73efa693
-Description=后台脚本呀
+MacroID=bdbafda1-d468-4e54-a022-a56ac46fd15c
+Description=大漠后台测试2
 Enable=1
 AutoRun=0
 [Repeat]
@@ -23,7 +23,45 @@ SetupOCXFile=
 [Comment]
 
 [Script]
-Hwnd = Plugin.Window.MousePoint()
-Call Plugin.Bkgnd.KeyPress(Hwnd, 65)
-Call Plugin.Bkgnd.KeyPress(Hwnd, 65)
-Call Plugin.Bkgnd.KeyPress(Hwnd, 65)
+set dm = createobject("dm.dmsoft")
+ver = dm.Ver()
+If len(ver) = 0 Then
+    MessageBox "创建对象失败,检查系统是否禁用了vbs脚本权限"
+    EndScript
+End If
+
+
+// 截图
+// set dm = createobject("dm.dmsoft")
+dm.SetPath "c:"
+hwnd = 139056
+// hwnd = dm.GetMousePointWindow()
+// messagebox hwnd
+// dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
+dm_ret = dm.BindWindow(hwnd,"dx2","windows","windows",0)
+
+
+If dm_ret = 0 Then 
+	MessageBox "绑定失败"
+	EndScript
+End If
+dm_ret = dm.Capture(0, 0, 2000, 2000, "screen.bmp")
+dm_ret = dm.UnBindWindow()
+// EndScript
+
+// 键盘
+Delay  1000
+// set dm = createobject("dm.dmsoft")
+//hwnd = dm.GetMousePointWindow()
+hwnd = 139056
+// dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
+dm_ret = dm.BindWindow(hwnd, "dx2", "normal", "normal", 0)
+
+dm.KeyPress 68
+dm_ret = dm.IsBind(hwnd)
+
+Delay  100
+dm_ret = dm.UnBindWindow()
+
+// messagebox hwnd
+EndScript

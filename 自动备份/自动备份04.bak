@@ -8,8 +8,8 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=76ce8ba2-7c92-4d9f-8bc1-f2fab8fc6730
-Description=我的脚本2
+MacroID=bdbafda1-d468-4e54-a022-a56ac46fd15c
+Description=大漠后台测试2
 Enable=1
 AutoRun=0
 [Repeat]
@@ -23,84 +23,45 @@ SetupOCXFile=
 [Comment]
 
 [Script]
-// 1随机 2加血 5地牢 F4隐身 F7治疗术 F8召唤
+set dm = createobject("dm.dmsoft")
+ver = dm.Ver()
+If len(ver) = 0 Then
+    MessageBox "创建对象失败,检查系统是否禁用了vbs脚本权限"
+    EndScript
+End If
 
-Delay 10
-BeginThread A
-Delay 10
-BeginThread B
-Delay 10
-BeginThread C
-Delay 10
-BeginThread D
 
-// 子程序不支持调用外部参数
+// 截图
+// set dm = createobject("dm.dmsoft")
+dm.SetPath "c:"
+hwnd = 139056
+// hwnd = dm.GetMousePointWindow()
+// messagebox hwnd
+// dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
+dm_ret = dm.BindWindow(hwnd,"dx2","windows","windows",0)
 
-// 有蓝有血 移动再飞随机 不移动
-Sub A()
-    While true
-        x = 400
-        y = 400
-        bgColor = "ffffff"
-        // 颜色 = GetPixelColor(x,y)
-        // 秒 = Second(now)
-        // SayString 颜色
-        // SayString 秒
-        IfColor x, y, bgColor, 0 Then
-        	MessageBox 1
-            Delay 2000
-            MessageBox 11
-        Else
-        End If
-        Delay 500
-    Wend
-End Sub
 
-// 减少血，加血
-Sub B()
-    While true
-        x = 400
-        y = 400
-        bgColor = "ffffff"
-        IfColor x - 3, y, bgColor, 1 Then
-        	MessageBox 2
-            Delay 2000
-            MessageBox 22
-        Else
-        End If
-        Delay 500
-    Wend
-End Sub
+If dm_ret = 0 Then 
+	MessageBox "绑定失败"
+	EndScript
+End If
+dm_ret = dm.Capture(0, 0, 2000, 2000, "screen.bmp")
+dm_ret = dm.UnBindWindow()
+// EndScript
 
-// 半血，招骷髅
-Sub C()
- 	While true
-        x = 400
-        y = 400
-        bgColor = "ffffff"
-        IfColor x - 12, y, bgColor, 1 Then
-        	MessageBox 3
-            Delay 2000
-            MessageBox 33
-        Else
-        End If
-        Delay 500
-    Wend
-End Sub
+// 键盘
+Delay  1000
+// set dm = createobject("dm.dmsoft")
+//hwnd = dm.GetMousePointWindow()
+hwnd = 139056
+// dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
+dm_ret = dm.BindWindow(hwnd, "dx", "windows", "windows", 0)
 
-// 没血，回城6,地牢5
-Sub D()
- While true
-        x = 400
-        y = 400
-        bgColor = "ffffff"
-        IfColor x - 22, y, bgColor, 1 Then
-        	MessageBox 4
-            Delay 2000
-            MessageBox 44
-        Else
-        End If
-        Delay 500
-    Wend
-End Sub
+dm.KeyPress 68
+dm_ret = dm.IsBind(hwnd)
 
+Delay  100
+dm_ret = dm.UnBindWindow()
+
+// messagebox hwnd
+EndScript

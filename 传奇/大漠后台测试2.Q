@@ -30,6 +30,9 @@ If len(ver) = 0 Then
     EndScript
 End If
 
+// 现在是可以获取截图，但是获取不到后台按键
+// 之前原版的是可以获取到按键，但是获取不到颜色变化
+
 
 // 截图
 // set dm = createobject("dm.dmsoft")
@@ -55,7 +58,7 @@ Delay  1000
 //hwnd = dm.GetMousePointWindow()
 hwnd = 139056
 // dm_ret = dm.BindWindow(hwnd,"normal","windows","normal",0)
-dm_ret = dm.BindWindow(hwnd, "dx", "windows", "windows", 0)
+dm_ret = dm.BindWindow(hwnd, "dx2", "normal", "normal", 0)
 
 dm.KeyPress 68
 dm_ret = dm.IsBind(hwnd)
